@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dealsdray/auth/login/login_phone_email.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -43,15 +44,19 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(26.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(FontAwesomeIcons.mobileScreen),
+              Image.asset(
+                "images/download-removebg-preview.png",
+                height: 100,
+                width: 100,
+              ),
               const SizedBox(
                 height: 40,
               ),
@@ -125,6 +130,15 @@ class _OTPVerificationState extends State<OTPVerification> {
                   ),
                 ],
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPhoneEmail(),
+                        ));
+                  },
+                  child: Text("navigate"))
             ],
           ),
         ),
