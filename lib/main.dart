@@ -1,4 +1,4 @@
-import 'package:dealsdray/splash_screen/splash_screen.dart';
+import 'package:dealsdray/auth/login/login_otp.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Deals Dray'),
+      home: const OTPVerification(),
+      // home: const MyHomePage(title: 'Deals Dray'),
     );
   }
 }
