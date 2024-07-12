@@ -1,7 +1,8 @@
-import 'package:dealsdray/home/cart/cart.dart';
-import 'package:dealsdray/home/categories/categories.dart';
+import 'package:dealsdray/home/screens/cart.dart';
+import 'package:dealsdray/home/screens/categories.dart';
 import 'package:dealsdray/home/home.dart';
-import 'package:dealsdray/home/profile/profile.dart';
+import 'package:dealsdray/home/screens/deals.dart';
+import 'package:dealsdray/home/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,10 +24,8 @@ class _BottomNavAppState extends State<BottomNavApp> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    // const Categories(),
-    const OTPVerification(),
-    // const Deals(),
-
+    const Categories(),
+    const Deals(),
     const Cart(),
     const Profile(),
   ];

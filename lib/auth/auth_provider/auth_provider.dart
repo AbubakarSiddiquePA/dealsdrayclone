@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:dealsdray/auth/auth_provider/device_info_model.dart';
-import 'package:dealsdray/auth/auth_provider/get_product_model.dart';
+import 'package:dealsdray/auth/auth_provider/auth_device_info_model.dart';
+import 'package:dealsdray/auth/auth_provider/auth_get_product_model.dart';
 import 'package:dealsdray/utils/api_support.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -121,7 +121,7 @@ class AuthProvider extends ChangeNotifier {
     );
 
     if (response.statusCode == 200) {
-      sentOtpResponseModel = responseModelFromJson(response.body);
+      // sentOtpResponseModel = responseModelFromJson(response.body);
       verifyloading = false;
 
       notifyListeners();
