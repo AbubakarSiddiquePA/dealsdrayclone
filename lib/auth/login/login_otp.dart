@@ -1,9 +1,9 @@
 import 'dart:async';
-
-import 'package:dealsdray/auth/login/login_phone_email.dart';
+import 'package:dealsdray/auth/auth_provider/auth_provider.dart';
+import 'package:dealsdray/auth/signup/signup_begin.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 
 class OTPVerification extends StatefulWidget {
   const OTPVerification({super.key});
@@ -16,6 +16,7 @@ class _OTPVerificationState extends State<OTPVerification> {
   TextEditingController otpController = TextEditingController();
   int _timerSeconds = 117; // 1 minute 57 seconds
   late Timer _timer;
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   @override
   void dispose() {
+    _isDisposed = true;
     _timer.cancel();
     otpController.dispose();
     super.dispose();
@@ -32,6 +34,10 @@ class _OTPVerificationState extends State<OTPVerification> {
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_isDisposed) {
+        timer.cancel();
+        return;
+      }
       if (_timerSeconds > 0) {
         setState(() {
           _timerSeconds--;
@@ -71,13 +77,13 @@ class _OTPVerificationState extends State<OTPVerification> {
                     height: 10,
                   ),
                   Text(
-                    "We have sent a unique OTP number\nyour mobile number 6238824067",
-                    style: TextStyle(fontSize: 16),
+                    "We have sent a unique OTP number\nyour mobile number +91 6238824067",
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                     textAlign: TextAlign.start, // Align text to start
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 46),
               PinCodeTextField(
                 controller: otpController,
                 appContext: context,
@@ -87,8 +93,8 @@ class _OTPVerificationState extends State<OTPVerification> {
                 pinTheme: PinTheme(
                   shape: PinCodeFieldShape.box,
                   borderRadius: BorderRadius.circular(16),
-                  fieldHeight: 50,
-                  fieldWidth: 40,
+                  fieldHeight: 55,
+                  fieldWidth: 55,
                   activeFillColor: Colors.white,
                   selectedFillColor: Colors.white,
                   inactiveFillColor: Colors.white,
@@ -100,45 +106,53 @@ class _OTPVerificationState extends State<OTPVerification> {
                 backgroundColor: Colors.transparent,
                 enableActiveFill: true,
                 onCompleted: (value) {
+                  if (_isDisposed) return;
                   // handle OTP completion
                 },
-                onChanged: (value) {},
+                onChanged: (value) {
+                  if (_isDisposed) return;
+                  // handle OTP change
+                },
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${(_timerSeconds ~/ 60).toString().padLeft(2, '0')}:${(_timerSeconds % 60).toString().padLeft(2, '0')}",
-                    style: const TextStyle(fontSize: 16, color: Colors.black54),
-                  ),
-                  const SizedBox(width: 10),
-                  TextButton(
-                    onPressed: _timerSeconds == 0
-                        ? () {
-                            // handle resend OTP
-                            _startTimer();
-                          }
-                        : null,
-                    child: Text(
-                      "Send Again",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: _timerSeconds == 0 ? Colors.blue : Colors.grey,
+              Consumer<AuthProvider>(
+                builder: (context, provider, child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${(_timerSeconds ~/ 60).toString().padLeft(2, '0')}:${(_timerSeconds % 60).toString().padLeft(2, '0')}",
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
-                    ),
-                  ),
-                ],
+                      const SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          if (!_isDisposed) {
+                            provider
+                                .verifyOtp(context, otp: otpController.text)
+                                .then((value) {
+                              if (!_isDisposed) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignUpBegin(),
+                                    ));
+                              }
+                            });
+                          }
+                        },
+                        child: Text(
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              decoration: TextDecoration.underline),
+                          provider.verifyloading ? "Loading" : "SEND AGAIN",
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPhoneEmail(),
-                        ));
-                  },
-                  child: Text("navigate"))
             ],
           ),
         ),

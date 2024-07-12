@@ -1,4 +1,7 @@
+import 'package:dealsdray/auth/auth_provider/auth_provider.dart';
+import 'package:dealsdray/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpBegin extends StatefulWidget {
   const SignUpBegin({super.key});
@@ -8,6 +11,9 @@ class SignUpBegin extends StatefulWidget {
 }
 
 class _SignUpBeginState extends State<SignUpBegin> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController referalCodeController = TextEditingController();
   bool isPhoneSelected = true;
   bool passwordVisibility = true;
 
@@ -46,13 +52,15 @@ class _SignUpBeginState extends State<SignUpBegin> {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Your Email',
               ),
             ),
             const SizedBox(height: 16),
             TextFormField(
+              controller: passwordController,
               obscureText: passwordVisibility,
               decoration: InputDecoration(
                 suffixIcon: IconButton(
@@ -70,28 +78,53 @@ class _SignUpBeginState extends State<SignUpBegin> {
             ),
             const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration(
+              controller: referalCodeController,
+              decoration: const InputDecoration(
                 labelText: 'Referral code (Optional)',
               ),
             ),
-            const SizedBox(height: 32),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.all(20),
-                ),
-                onPressed: () {},
-                child: const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                ),
-              ),
+            const SizedBox(
+              height: 10,
             ),
+            Consumer<AuthProvider>(
+              builder: (context, provider, child) {
+                return Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.all(20),
+                    ),
+                    onPressed: () {
+                      provider
+                          .registerUserDetails(context,
+                              email: emailController.text,
+                              password: passwordController.text,
+                              referralCode: referalCodeController.text)
+                          .then((value) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Home(),
+                            ));
+                      });
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Home(),
+                          ));
+                    },
+                    child: Icon(
+                      provider.verifyloading ? null : Icons.arrow_forward,
+                      color: Colors.white,
+                    ),
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
