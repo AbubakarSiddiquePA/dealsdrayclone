@@ -11,7 +11,7 @@ class SignUpBegin extends StatefulWidget {
 }
 
 class _SignUpBeginState extends State<SignUpBegin> {
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -140,7 +140,7 @@ class _SignUpBeginState extends State<SignUpBegin> {
                         }
                       },
                       child: provider.verifyloading
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : const Icon(
                               Icons.arrow_forward,
                               color: Colors.white,

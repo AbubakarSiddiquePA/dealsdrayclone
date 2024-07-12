@@ -45,8 +45,6 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.all(10),
                   child: Image.asset(
                     "images/searchIcon.jpg",
-                    // height: 25,
-                    // width: 10,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -123,7 +121,6 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    // const SizedBox(height: 6),
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: SizedBox(

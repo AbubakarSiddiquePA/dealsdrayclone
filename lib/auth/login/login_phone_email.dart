@@ -12,7 +12,7 @@ class LoginPhoneEmail extends StatefulWidget {
 }
 
 class _LoginPhoneEmailState extends State<LoginPhoneEmail> {
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController phoneNumberController = TextEditingController();
 
@@ -25,12 +25,10 @@ class _LoginPhoneEmailState extends State<LoginPhoneEmail> {
           : 'Please enter your email';
     }
     if (isPhoneSelected) {
-      // Add phone number validation logic
       if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
         return 'Please enter a valid 10-digit phone number';
       }
     } else {
-      // Add email validation logic
       if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
         return 'Please enter a valid email address';
       }
@@ -65,7 +63,7 @@ class _LoginPhoneEmailState extends State<LoginPhoneEmail> {
                     2: Text("Email"),
                   },
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.grey[100],
                     borderRadius: BorderRadius.circular(16),
                   ),
                   thumbDecoration: BoxDecoration(
@@ -78,8 +76,7 @@ class _LoginPhoneEmailState extends State<LoginPhoneEmail> {
                   onValueChanged: (int value) {
                     setState(() {
                       isPhoneSelected = (value == 1);
-                      phoneNumberController
-                          .clear(); // Clear the input field when switching
+                      phoneNumberController.clear();
                     });
                   },
                 ),
@@ -104,8 +101,7 @@ class _LoginPhoneEmailState extends State<LoginPhoneEmail> {
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
-                      key: ValueKey(
-                          isPhoneSelected), // Change the key to force rebuild
+                      key: ValueKey(isPhoneSelected),
                       controller: phoneNumberController,
                       keyboardType: isPhoneSelected
                           ? TextInputType.phone

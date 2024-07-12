@@ -69,6 +69,8 @@ class _BottomNavAppState extends State<BottomNavApp> {
           onTap: _onItemTapped,
         ),
         floatingActionButton: FloatingActionButton.extended(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           isExtended: true,
           onPressed: () {},
           backgroundColor: Colors.red,

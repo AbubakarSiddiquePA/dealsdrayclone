@@ -40,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: null /* add child content here */,
+        child: null,
       ),
     );
   }

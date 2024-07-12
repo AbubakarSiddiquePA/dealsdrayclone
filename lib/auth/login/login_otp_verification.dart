@@ -79,7 +79,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                   Text(
                     "We have sent a unique OTP number\nyour mobile number +91 6238824067",
                     style: TextStyle(color: Colors.grey, fontSize: 16),
-                    textAlign: TextAlign.start, // Align text to start
+                    textAlign: TextAlign.start,
                   ),
                 ],
               ),
@@ -125,7 +125,6 @@ class _OTPVerificationState extends State<OTPVerification> {
                   },
                   onChanged: (value) {
                     if (_isDisposed) return;
-                    // handle OTP change
                   },
                 );
               }),
@@ -142,23 +141,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                       ),
                       const SizedBox(width: 10),
                       TextButton(
-                        onPressed: () {
-                          // if (_isDisposed) return;
-                          // handle OTP completion
-                          // if (!_isDisposed) {
-                          //   provider
-                          //       .verifyOtp(context, otp: otpController.text)
-                          //       .then((value) {
-                          //     if (!_isDisposed) {
-                          //       Navigator.push(
-                          //           context,
-                          //           MaterialPageRoute(
-                          //             builder: (context) => const SignUpBegin(),
-                          //           ));
-                          //     }
-                          //   });
-                          // }
-                        },
+                        onPressed: () {},
                         child: Text(
                           style: const TextStyle(
                               color: Colors.grey,
